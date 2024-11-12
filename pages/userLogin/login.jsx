@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const UserLoginPage = () => {
+const LoginPage = () => {
   // State to manage form inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -8,10 +8,9 @@ const UserLoginPage = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For now, just log the user inputs
     console.log("Username:", username);
     console.log("Password:", password);
-    // Here, you can handle authentication logic
+    // Handle authentication logic here (e.g., API call)
   };
 
   return (
@@ -20,7 +19,10 @@ const UserLoginPage = () => {
         <h2 className="text-2xl font-bold text-center mb-6">User Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 font-semibold mb-2">
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-semibold mb-2"
+            >
               Username
             </label>
             <input
@@ -34,7 +36,10 @@ const UserLoginPage = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-semibold mb-2"
+            >
               Password
             </label>
             <input
@@ -59,4 +64,4 @@ const UserLoginPage = () => {
   );
 };
 
-export default UserLoginPage;
+export default LoginPage;
