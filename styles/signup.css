@@ -1,0 +1,100 @@
+/* signup.css */
+
+/* General background for the signup page */
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to right, #3b82f6, #ec4899); /* Gradient background */
+  }
+  
+  /* The signup box layout */
+  .signup-box {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading for the form */
+  .signup-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Form container layout */
+  .signup-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Input labels styling */
+  .signup-box label {
+    font-size: 14px;
+    color: #4b5563;
+    font-weight: 500;
+  }
+  
+  /* Inputs styling */
+  .signup-box input {
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  /* Submit button styling */
+  .signup-box button {
+    background-color: #10b981;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  /* Link to login for existing users */
+  .sign-in-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .sign-in-text a {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+  
+  /* Social media icons styling (optional) */
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .social-icons a {
+    font-size: 24px;
+    color: #3b82f6;
+  }
+  
+  .google-icon {
+    color: #db4437;
+  }
+  
+  .sign-in-text a {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+  

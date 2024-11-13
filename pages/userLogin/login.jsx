@@ -1,64 +1,71 @@
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import Link from "next/link"; // Import Link component for navigation
 
 const LoginPage = () => {
-  // State to manage form inputs
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  // Update the backend URL here, or use environment variable
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/users';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Handle authentication logic here (e.g., API call)
+
+    try {
+      // Sending the login request to the backend
+      const response = await axios.post(`${API_URL}/login`, { email, password });
+
+      // Save the token received from the backend to localStorage
+      localStorage.setItem('token', response.data.token);
+
+      // Redirect user to the dashboard after successful login
+      router.push('/dashboard');
+    } catch (error) {
+      // Display error message if login fails
+      if (error.response) {
+        alert(`Login failed: ${error.response.data.message || 'Please check your credentials.'}`);
+      } else {
+        alert("An error occurred. Please try again.");
+      }
+    }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">User Login</h2>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-semibold mb-2"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-semibold mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
-          >
-            Log In
-          </button>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            required
+          />
+          <button type="submit">Login</button>
         </form>
+
+        {/* Sign up link */}
+        <p>
+          Don't have an account?{" "}
+          <Link href="/userLogin/signup">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
