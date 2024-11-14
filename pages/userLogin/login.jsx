@@ -14,9 +14,16 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Debugging: Log the email and password before making the request
+    console.log("Email:", email);
+    console.log("Password:", password);
+
     try {
       // Sending the login request to the backend
       const response = await axios.post(`${API_URL}/login`, { email, password });
+
+      // Debugging: Check the response data
+      console.log('Login response:', response.data);
 
       // Save the token received from the backend to localStorage
       localStorage.setItem('token', response.data.token);
@@ -26,6 +33,7 @@ const LoginPage = () => {
     } catch (error) {
       // Display error message if login fails
       if (error.response) {
+        console.error('Error details:', error.response); // Log the error response from the backend
         alert(`Login failed: ${error.response.data.message || 'Please check your credentials.'}`);
       } else {
         alert("An error occurred. Please try again.");

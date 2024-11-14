@@ -69,7 +69,7 @@ const SignupPage = () => {
           />
           <label htmlFor="role">Role</label>
           <select
-            id="role"
+            id="employee"
             value={role}
             onChange={(e) => setRole(e.target.value)}
             required

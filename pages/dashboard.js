@@ -1,7 +1,8 @@
-// pages/dashboard.js
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import AdminDashboard from "./AdminDashboard"; // Import AdminDashboard component
+import EmployeeDashboard from "./EmployeeDashboard"; // Import EmployeeDashboard component
 
 const Dashboard = () => {
   const [role, setRole] = useState(null); // To store the user's role
@@ -9,7 +10,6 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if token exists in localStorage and verify the user
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -17,7 +17,6 @@ const Dashboard = () => {
       return;
     }
 
-    // Fetch user details based on the token
     axios
       .get("http://localhost:5000/api/users/verify", {
         headers: {
@@ -25,7 +24,8 @@ const Dashboard = () => {
         },
       })
       .then((response) => {
-        setRole(response.data.role); // Assume the response contains a `role`
+        console.log(response.data); // Log the response to check the structure
+        setRole(response.data.role); // Assuming response contains a 'role' property
         setLoading(false);
       })
       .catch((error) => {
@@ -39,37 +39,19 @@ const Dashboard = () => {
     return <div>Loading...</div>; // Show loading message while data is being fetched
   }
 
-  return (
-    <div>
-      {role === "admin" ? (
-        <AdminDashboard />
-      ) : role === "employee" ? (
-        <EmployeeDashboard />
-      ) : (
-        <div>Invalid role</div>
-      )}
-    </div>
-  );
-};
+  if (!role) {
+    return <div>Role is not defined. Please check your login status.</div>; // Handle undefined role
+  }
 
-const AdminDashboard = () => {
-  return (
-    <div>
-      <h2>Admin Dashboard</h2>
-      <p>Welcome, Admin! Here you can manage employees, departments, etc.</p>
-      {/* Add your Admin dashboard content here */}
-    </div>
-  );
-};
+  if (role === "admin") {
+    return <AdminDashboard />;
+  }
 
-const EmployeeDashboard = () => {
-  return (
-    <div>
-      <h2>Employee Dashboard</h2>
-      <p>Welcome, Employee! Here you can view your tasks and leave requests.</p>
-      {/* Add your Employee dashboard content here */}
-    </div>
-  );
+  if (role === "user") {
+    return <EmployeeDashboard />;
+  }
+
+  return <div>Invalid role</div>; // Handle case for invalid role
 };
 
 export default Dashboard;
