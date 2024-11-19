@@ -16,17 +16,27 @@ const ProtectedRoute = (WrappedComponent) => {
       }
 
       // Verify the token
-      const verifyToken = async () => {
+      const verify = async () => {
         try {
-          const response = await axios.post('http://localhost:5000/api/users/verify', { token });
+          // Send the token in the Authorization header as a Bearer token
+          const response = await axios.post(
+            'http://localhost:5000/api/users/verify', 
+            {},
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', // Ensure the Content-Type is correct
+              }
+            }
+          );
           console.log('Token is valid', response.data);
         } catch (error) {
-          console.error('Token verification failed', error);
+          console.error('Token verification failed', error.response?.data || error.message);
           router.push('/userLogin/login'); // Redirect to login if token verification fails
         }
       };
 
-      verifyToken();
+      verify();
     }, []);
 
     return <WrappedComponent {...props} />;
