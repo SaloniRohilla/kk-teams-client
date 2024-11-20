@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     try {
       // Sending the login request to the backend
-      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const response = await axios.post(`http://localhost:5000/api/users/login`, { email, password });
 
       // Debugging: Check the response data
       console.log('Login response:', response.data);
