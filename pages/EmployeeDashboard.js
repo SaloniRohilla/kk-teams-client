@@ -1,13 +1,18 @@
-// pages/employeeDashboard.js
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 const EmployeeDashboard = () => {
-    return (
-      <div>
-        <h2>Employee Dashboard</h2>
-        <p>Welcome, Employee! Here you can view your tasks and leave requests.</p>
-        {/* Add more employee-specific content here */}
-      </div>
-    );
-  };
-  
-  export default EmployeeDashboard;
-  
+  return (
+    <div>
+      <h1>Employee Dashboard</h1>
+      <ul>
+        <li>View Announcements</li>
+        <li>Request Leave</li>
+        <li>Check Attendance</li>
+      </ul>
+    </div>
+  );
+};
+
+
+export default EmployeeDashboard;
