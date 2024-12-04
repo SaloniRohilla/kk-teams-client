@@ -20,10 +20,10 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/manage-departments": [
+    "/admin/manage-announcements": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/manage-departments.js"
+      "static/chunks/pages/admin/manage-announcements.js"
     ],
     "/admin/manage-employees": [
       "static/chunks/webpack.js",

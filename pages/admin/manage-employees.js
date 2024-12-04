@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const ManageEmployees = () => {
   const [employees, setEmployees] = useState([]);
-  const [newEmployee, setNewEmployee] = useState({ name: '', email: '', department: '' });
+  const [newEmployee, setNewEmployee] = useState({ name: '', email: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
@@ -13,7 +13,7 @@ const ManageEmployees = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/employees');
+        const response = await axios.get('http://localhost:5000/api/employees/employees');
         setEmployees(response.data);
       } catch (err) {
         setError('Failed to fetch employees');
@@ -26,14 +26,13 @@ const ManageEmployees = () => {
   const handleCreateEmployee = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/employees', {
+      const response = await axios.post('http://localhost:5000/api/employees/employees', {
         name: newEmployee.name,
         email: newEmployee.email,
-        department: newEmployee.department,
         password: 'defaultPassword123', // Handle password securely
       });
       setSuccess('Employee created successfully');
-      setNewEmployee({ name: '', email: '', department: '' }); // Clear form after creation
+      setNewEmployee({ name: '', email: '' }); // Clear form after creation
       setEmployees([...employees, response.data]); // Add new employee to list
     } catch (err) {
       setError('Failed to create employee');
@@ -43,26 +42,12 @@ const ManageEmployees = () => {
   // Handle employee deletion
   const handleDeleteEmployee = async (id) => {
     try {
-      await axios.delete(`/api/employees/${id}`);
+      await axios.delete(`http://localhost:5000/api/employees/employees/${id}`);
       setSuccess('Employee deleted successfully');
-      setEmployees(employees.filter((employee) => employee._id !== id)); // Remove deleted employee from list
+      setEmployees(employees.filter((employee) => employee._id !== id));
     } catch (err) {
       setError('Failed to delete employee');
-    }
-  };
-
-  // Handle employee update (e.g., update department)
-  const handleUpdateEmployee = async (id, updatedData) => {
-    try {
-      const response = await axios.put(`/api/employees/${id}`, updatedData);
-      setSuccess('Employee updated successfully');
-      setEmployees(
-        employees.map((employee) =>
-          employee._id === id ? { ...employee, ...response.data } : employee
-        )
-      );
-    } catch (err) {
-      setError('Failed to update employee');
+      console.error(err.response ? err.response.data : err.message);
     }
   };
 
@@ -89,13 +74,6 @@ const ManageEmployees = () => {
           onChange={(e) => setNewEmployee({ ...newEmployee, email: e.target.value })}
           required
         />
-        <input
-          type="text"
-          placeholder="Department"
-          value={newEmployee.department}
-          onChange={(e) => setNewEmployee({ ...newEmployee, department: e.target.value })}
-          required
-        />
         <button type="submit">Create Employee</button>
       </form>
 
@@ -103,9 +81,8 @@ const ManageEmployees = () => {
       <ul>
         {employees.map((employee) => (
           <li key={employee._id}>
-            {employee.name} - {employee.email} - {employee.department}
+            {employee.name} - {employee.email}
             <button onClick={() => handleDeleteEmployee(employee._id)}>Delete</button>
-            <button onClick={() => handleUpdateEmployee(employee._id, { department: 'New Department' })}>Update Department</button>
           </li>
         ))}
       </ul>
