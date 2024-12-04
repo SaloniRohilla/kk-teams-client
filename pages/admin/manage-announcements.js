@@ -79,7 +79,7 @@ const ManageAnnouncements = () => {
       {/* Create Announcement Button */}
       <button 
         onClick={() => setShowForm(!showForm)}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        className="mb-4 px-4 py-2 bg-blue-500 text-black rounded"
       >
         {showForm ? 'Cancel' : 'Create Announcement'}
       </button>
@@ -106,7 +106,7 @@ const ManageAnnouncements = () => {
           />
           <button 
             type="submit" 
-            className="px-4 py-2 bg-green-500 text-white rounded"
+            className="px-4 py-2 bg-green-500 text-black rounded"
           >
             Create Announcement
           </button>

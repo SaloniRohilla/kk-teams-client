@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/AdminDashboard": "pages/AdminDashboard.js",
-  "/admin/manage-employees": "pages/admin/manage-employees.js",
-  "/admin/manage-announcements": "pages/admin/manage-announcements.js"
+  "/": "pages/index.js",
+  "/admin/leave-requests": "pages/admin/leave-requests.js"
 }
