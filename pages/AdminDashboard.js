@@ -9,7 +9,6 @@ const AdminDashboard = () => {
           <li><Link href="/admin/manage-employees">Manage Employees</Link></li>
           <li><Link href="/admin/manage-announcements">Announcements</Link></li>
           <li><Link href="/admin/leave-requests">Leave Requests</Link></li>
-          <li><Link href="/admin/employee-profile">Employee Profile</Link></li>
           <li><Link href="/admin/holiday-calendar">Holiday Calendar</Link></li>
           <li><Link href="/admin/manage-departments">Manage Departments</Link></li>
 

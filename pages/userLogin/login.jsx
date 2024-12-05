@@ -1,33 +1,23 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Link from "next/link"; // Import Link component for navigation
+import Link from "next/link";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  // Update the backend URL here, or use an environment variable
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/users";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-
     try {
-      // Sending the login request to the backend
       const response = await axios.post(`${API_URL}/login`, { email, password });
-
-      console.log("Login response:", response.data);
-
-      // Save the token received from the backend to localStorage
       localStorage.setItem("token", response.data.token);
       const userRole = response.data.user.role;
 
-      // Redirect user based on their role
       if (userRole === "admin") {
         router.push("/AdminDashboard");
       } else if (userRole === "user") {
@@ -36,9 +26,7 @@ const LoginPage = () => {
         alert("Invalid role. Please contact support.");
       }
     } catch (error) {
-      // Display error message if login fails
       if (error.response) {
-        console.error("Error details:", error.response); // Log the error response from the backend
         alert(`Login failed: ${error.response.data.message || "Please check your credentials."}`);
       } else {
         alert("An error occurred. Please try again.");
@@ -48,6 +36,9 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
+      {/* Add the KK TEAMS title */}
+      <h1 className="kk-title">KK TEAMS</h1>
+      
       <div className="login-box">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
@@ -72,7 +63,6 @@ const LoginPage = () => {
           <button type="submit">Login</button>
         </form>
 
-        {/* Sign up link */}
         <p>
           Don't have an account?{" "}
           <Link href="/userLogin/signup">

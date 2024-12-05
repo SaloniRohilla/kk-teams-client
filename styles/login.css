@@ -1,11 +1,33 @@
-/* login.css */
-
 .login-container {
   display: flex;
+  flex-direction: column; /* Stack elements vertically */
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-image: linear-gradient(to right, #3b82f6, #ec4899);
+  padding: 20px; /* Add padding to avoid content hitting edges */
+}
+
+.kk-title {
+  position: relative; /* Position relative for animation */
+  top: -50px; /* Adjust the title above the login box */
+  font-size: 48px; /* Large font size */
+  color: black; /* Black color */
+  font-weight: bold; /* Bold font */
+  text-align: center; /* Center alignment */
+  animation: slide-down 1s ease-out; /* Apply sliding animation */
+}
+
+/* Keyframes for sliding effect */
+@keyframes slide-down {
+  0% {
+    transform: translateY(-50px); /* Start higher */
+    opacity: 0; /* Initially invisible */
+  }
+  100% {
+    transform: translateY(0); /* Final position */
+    opacity: 1; /* Fully visible */
+  }
 }
 
 .login-box {

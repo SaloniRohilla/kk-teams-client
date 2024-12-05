@@ -15,9 +15,7 @@ const LeaveRequests = () => {
         console.log('Response received:', response.data);
         setRequests(response.data);
       } catch (err) {
-        console.error('Full error object:', err);
-        console.error('Error response:', err.response);
-        console.error('Error message:', err.message);
+        console.error('Error fetching leave requests:', err);
         setError(err.response?.data?.error || 'Failed to fetch leave requests');
       } finally {
         setLoading(false);
@@ -29,17 +27,21 @@ const LeaveRequests = () => {
   // Update leave request status
   const updateLeaveRequest = async (id, status) => {
     try {
-      const response = await axios.put(`/api/leave-requests/${id}`, { status });
-      alert(`Leave request ${status}`);
-      // Update the status in the frontend after successful update
+      const url = status === 'approved'
+        ? `http://localhost:5000/api/leave-requests/${id}/approve`
+        : `http://localhost:5000/api/leave-requests/${id}/reject`;
+
+      const response = await axios.patch(url); // Use PATCH instead of PUT
+
+      // Directly update the status in the frontend after successful update
       setRequests((prevRequests) =>
         prevRequests.map((request) =>
-          request._id === id ? { ...request, status: response.data.status } : request
+          request._id === id ? { ...request, status: response.data.leaveRequest.status } : request
         )
       );
     } catch (err) {
-      console.error('Failed to update leave request', err);
-      alert('Failed to update leave request. Please try again.');
+      console.error('Error updating leave request:', err);
+      // Optionally display an error message here if needed
     }
   };
 
@@ -52,15 +54,19 @@ const LeaveRequests = () => {
       <ul>
         {requests.map((request) => (
           <li key={request._id}>
-            <strong>{request.employee?.name || 'Unknown Employee'}</strong> -{' '}
-            <span>{request.leaveType || 'General Leave'}</span> -{' '}
-            <span style={{ color: request.status === 'approved' ? 'green' : 'red' }}>
-              {request.status || 'Pending'}
+            <strong>{request.userId || 'Unknown User'}</strong> -{' '}
+            <span>{new Date(request.startDate).toLocaleDateString()} to {new Date(request.endDate).toLocaleDateString()}</span> -{' '}
+            <span
+              style={{
+                color: request.status === 'approved' ? 'green' : request.status === 'rejected' ? 'red' : 'orange',
+              }}
+            >
+              {request.status === 'approved' ? 'Leave Approved' : request.status === 'rejected' ? 'Leave Rejected' : 'Pending'}
             </span>
-            <button onClick={() => updateLeaveRequest(request._id, 'approved')}>
+            <button onClick={() => updateLeaveRequest(request._id, 'approved')} style={{ marginLeft: '10px' }}>
               Approve
             </button>
-            <button onClick={() => updateLeaveRequest(request._id, 'rejected')}>
+            <button onClick={() => updateLeaveRequest(request._id, 'rejected')} style={{ marginLeft: '5px' }}>
               Reject
             </button>
           </li>
