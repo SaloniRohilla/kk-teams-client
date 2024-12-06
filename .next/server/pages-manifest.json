@@ -2,9 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/AdminDashboard": "pages/AdminDashboard.js",
-  "/admin/manage-employees": "pages/admin/manage-employees.js",
-  "/admin/leave-requests": "pages/admin/leave-requests.js",
-  "/admin/manage-announcements": "pages/admin/manage-announcements.js",
-  "/admin/manage-departments": "pages/admin/manage-departments.js"
+  "/": "pages/index.js",
+  "/AdminDashboard": "pages/AdminDashboard.js"
 }
